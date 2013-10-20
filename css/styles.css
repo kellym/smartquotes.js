@@ -1,0 +1,16 @@
+h1 { margin-top: 2em; font-size: 4em; font-family: 'Source Sans Pro', sans-serif; font-weight: 700; }
+h2 { margin-top: 2em; font-family: 'Source Sans Pro', sans-serif; font-weight: 700; }
+body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+p { margin-bottom: 2em; }
+.text-center { margin-bottom: 4em; }
+.text-center p { margin: 2em 0; }
+pre { margin-top: 2em; }
+code { background: #efefef; border: 1px solid #eee; padding: 0; text-align: left; display: block; margin: 1em auto; line-height: 1.8; }
+.container { max-width: 760px }
+.footer {
+  margin-top: 4em;
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #E5E5E5;
+}
+.btn-default { margin-right: 1em; }
