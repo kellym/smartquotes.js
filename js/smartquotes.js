@@ -1,5 +1,5 @@
 /*!
- * smartquotes.js v0.1.0
+ * smartquotes.js v0.1.1
  * http://github.com/kellym/smartquotesjs
  * MIT licensed
  *
@@ -28,7 +28,7 @@
        .replace(/([a-z])'([a-z])/ig, '$1\u2019$2')
        .replace(/((\u2019[^']*)|[a-z])'([^0-9]|$)/ig, '$1\u2019$3')
        .replace(/(\u2018)([0-9]{2}[^\2019]*)(\u2018([^0-9]|$)|$)/g, '\u2019$2$3')
-       .replace(/(\B|^)(\u2018)(([^u2019]*\b)|([^\u2019]*$))/ig, '$1\u2019$3')
+       .replace(/(\B|^)(\u2018)(([^u2019]*[a-z])|([^\u2019]*$))/ig, '$1\u2019$3')
        .replace(/'/g, '\u2032')
        .replace(/"/g, '\u2033');
     }
