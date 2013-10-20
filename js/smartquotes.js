@@ -1,5 +1,5 @@
 /*!
- * smartquotes.js v0.1.1
+ * smartquotes.js v0.1.2
  * http://github.com/kellym/smartquotesjs
  * MIT licensed
  *
@@ -40,7 +40,7 @@
           node = node.parentNode;
         }
         node = node.nextSibling;
-      } while (node && node.nodeName == "CODE");
+      } while (node && (node.nodeName == "CODE" || node.nodeName == "SCRIPT" || node.nodeName == "STYLE"));
     }
   }
 });
