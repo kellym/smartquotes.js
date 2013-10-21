@@ -1,0 +1,14 @@
+{
+    "name"          : "smartquotesjs",
+    "version"       : "0.1.2",
+    "author"        : "Kelly Martin",
+    "description"   : "Smart quotes are smart typography.",
+    "homepage"      : "http://github.com/kellym/smartquotesjs",
+    "license"       : "MIT",
+    "keywords"      : ["smart", "quotes", "browser"],
+    "repository"    : {
+        "type": "git",
+        "url": "git://github.com/kellym/smartquotesjs.git"
+    },
+    "main"          : "./src/smartquotes.min.js"
+}
