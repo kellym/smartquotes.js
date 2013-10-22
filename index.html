@@ -45,11 +45,13 @@
         There's only so much a script can do by itself, though.
         Smartquotes.js tries to catch what it can,
         namely abbreviated years like '13 and places like the 'burbs, but in the cases
-        that it can't&mdash;there's not much &rsquo;splainin' to do&mdash;just use <strong>&amp;rsquo;</strong>.
+        that it can't&mdash;there's not much &rsquo;splainin' to do&mdash;just use <strong>&amp;rsquo;</strong> or try wrapping the word in a &lt;span> tag.
         </p>
         <h4>What do I need to change in my code?</h4>
         <p>
-        Nothing. Just include the script, and Smartquotes.js will detect all your dumb quotes and convert them to the respective smart versions.
+        Nothing. Just include the script, and Smartquotes.js will detect all your dumb quotes and convert them to the respective smart versions. If you
+        use jQuery, put this script after jQuery and Smartquotes.js will use jQuery's onload event.
+        Otherwise, Smartquotes.js doesn't have any dependencies and can be used by itself.
         </p>
       <pre><code>
       // Just include the script somewhere on the page and you're good to go.
