@@ -5,6 +5,10 @@ Smart quotes are smart typography, and now it’s just a ’script away.
 
 Visit the homepage at <a href="http://smartquotesjs.com">smartquotesjs.com</a>.
 
+```java
+// Just include the script somewhere on the page and you're good to go.
+<script src="smartquotes.min.js" type="text/javascript"></script>
+```
 #### What are smart quotes?
 
 “Smart quotes,” or “curly quotes,” are the proper typographical way to represent quotation marks. Unfortunately, in order to save space on the keyboard, the dumb quote was created. Smartquotes.js is here to convert all your dumb quotes back to smart ones.
