@@ -28,3 +28,7 @@ Nothing. Just include the script, and Smartquotes.js will detect all your dumb q
 #### What tags are converted automatically?
 
 Everything is converted except for `<code>`, `<script>`, and `<style>` tags.
+
+## Contributing
+
+If you find bugs or additions to the code, the best way to contribute is to fork this repo, make the changes (without updating version numbers), and make a pull request back to this repo to be merged in.  Still working on getting tests in place for Smartquotes.js.
