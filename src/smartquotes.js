@@ -31,7 +31,9 @@
        .replace(/(\B|^)\u2018(?=([^\u2019]*\u2019\b)*([^\u2019\u2018]*\W[\u2019\u2018]\b|[^\u2019\u2018]*$))/ig, '$1\u2019') // backwards apostrophe
        .replace(/'''/g, '\u2034')                                                   // triple prime
        .replace(/("|'')/g, '\u2033')                                                // double prime
-       .replace(/'/g, '\u2032');                                                    // prime
+       .replace(/'/g, '\u2032')                                                     // prime
+       .replace(/ ?\.\.\. ?/g, '\u2026')                                            // ellipsis
+       .replace(/ ?\. \. \. /g, '\u2026');                                          // ellipsis (alternate)
     }
     if(node.hasChildNodes() && node.firstChild.nodeName != "CODE") {
       node = node.firstChild;
