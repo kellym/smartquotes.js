@@ -7,13 +7,13 @@
  */
 
 (function (root, factory) {
-	if (typeof define === 'function' && define.amd) {
-		define(factory);
-	} else if (typeof exports === 'object') {
-		module.exports = factory();
-	} else {
-		root.smartquotes = factory();
-	}
+  if (typeof define === 'function' && define.amd) {
+    define(factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.smartquotes = factory();
+  }
 }(this, function () {
   // The smartquotes should just delegate to the other functions
   function smartquotes(context) {
@@ -24,7 +24,7 @@
     if (typeof context === 'string') {
       return smartquotes.string(context);
     }
-    
+
     if (context instanceof HTMLElement) {
       return smartquotes.html(context);
     }
@@ -46,22 +46,26 @@
   };
 
   smartquotes.html = function smartquotesHtml(root) {
-    var node = root.childNodes[0];
+    handleElement(root);
 
-    while (node !== null) {
-      if (node.nodeType === 3) {
-        node.nodeValue = smartquotes.string(node.nodeValue);
+    var children = root.getElementsByTagName('*');
+    for (var i = 0; i < children.length; i++) {
+      handleElement(children[i]);
+    }
+
+    function handleElement(el) {
+      if (['CODE', 'PRE', 'SCRIPT', 'STYLE'].indexOf(el.nodeName) !== -1) {
+        return;
       }
 
-      if (node.hasChildNodes() && node.firstChild.nodeName !== 'CODE') {
-        node = node.firstChild;
-      } else {
-        do {
-          while (node.nextSibling === null && node !== root) {
-            node = node.parentNode;
-          }
-          node = node.nextSibling;
-        } while (node && ['CODE', 'SCRIPT', 'STYLE'].indexOf(node.nodeName) !== -1);
+      var childNodes = el.childNodes;
+
+      for (var i = 0; i < childNodes.length; i++) {
+        var node = childNodes[i];
+
+        if (node.nodeType === Element.TEXT_NODE) {
+          node.nodeValue = smartquotes.string(node.nodeValue);
+        }
       }
     }
   };
