@@ -5,9 +5,9 @@ Smart quotes are smart typography, and now it’s just a ’script away.
 
 Visit the homepage at <a href="http://smartquotesjs.com">smartquotesjs.com</a>.
 
-```java
-// Just include the script somewhere on the page and you're good to go.
-<script src="smartquotes.min.js" type="text/javascript"></script>
+```markup
+<script src="smartquotes.min.js"></script>
+<script> smartquotes() </script>
 ```
 #### What are smart quotes?
 
@@ -27,11 +27,11 @@ Technically, words that are shortened at the beginning require a backwards apost
 
 #### What do I need to change in my code?
 
-Nothing. Just include the script, and Smartquotes.js will detect all your dumb quotes and convert them to the respective smart versions. If you use jQuery, put this script after jQuery and Smartquotes.js will use jQuery’s onload event. Otherwise, Smartquotes.js doesn’t have any dependencies and can be used by itself.
+Just include the script, call `smartquotes()` once the page has loaded, and Smartquotes.js will detect all your dumb quotes and convert them to the respective smart versions. Smartquotes.js doesn’t have any dependencies and can be used by itself.
 
 #### What tags are converted automatically?
 
-Everything is converted except for `<code>`, `<script>`, and `<style>` tags.
+Everything is converted except for `<code>`, `<script>`, `<style>`, and `<pre>` tags.
 
 ## Contributing
 
