@@ -18,7 +18,7 @@
   // The smartquotes should just delegate to the other functions
   function smartquotes(context) {
     if (typeof context === 'undefined') {
-      return smartquotes.page();
+      return smartquotes.element(document.body);
     }
 
     if (typeof context === 'string') {
@@ -26,7 +26,7 @@
     }
 
     if (context instanceof HTMLElement) {
-      return smartquotes.html(context);
+      return smartquotes.element(context);
     }
   }
 
@@ -45,7 +45,7 @@
       .replace(/'/g, '\u2032');
   };
 
-  smartquotes.html = function smartquotesHtml(root) {
+  smartquotes.element = function smartquotesElement(root) {
     handleElement(root);
 
     var children = root.getElementsByTagName('*');
@@ -68,10 +68,6 @@
         }
       }
     }
-  };
-
-  smartquotes.page = function smartquotesPage() {
-    smartquotes.html(document.body);
   };
 
   return smartquotes;
