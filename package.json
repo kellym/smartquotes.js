@@ -1,14 +1,28 @@
 {
-    "name"          : "smartquotesjs",
-    "version"       : "0.1.4",
-    "author"        : "Kelly Martin",
-    "description"   : "Smart quotes are smart typography.",
-    "homepage"      : "http://github.com/kellym/smartquotesjs",
-    "license"       : "MIT",
-    "keywords"      : ["smart", "quotes", "browser"],
-    "repository"    : {
-        "type": "git",
-        "url": "git://github.com/kellym/smartquotesjs.git"
-    },
-    "main"          : "./src/smartquotes.min.js"
+  "name": "smartquotesjs",
+  "version": "0.1.4",
+  "author": "Kelly Martin",
+  "description": "Smart quotes are smart typography.",
+  "homepage": "http://github.com/kellym/smartquotesjs",
+  "license": "MIT",
+  "keywords": [
+    "smart",
+    "quotes",
+    "browser"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kellym/smartquotesjs.git"
+  },
+  "main": "./src/smartquotes.js",
+  "bugs": {
+    "url": "https://github.com/kellym/smartquotesjs/issues"
+  },
+  "scripts": {
+    "test": "node ./test"
+  },
+  "devDependencies": {
+    "jsdom": "^3.1.2",
+    "tape": "^4.0.0"
+  }
 }
