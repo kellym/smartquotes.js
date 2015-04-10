@@ -15,7 +15,7 @@
     root.smartquotes = factory();
   }
 }(this, function () {
-  // The smartquotes should just delegate to the other functions
+  // The smartquotes function should just delegate to the other functions
   function smartquotes(context) {
     if (typeof context === 'undefined') {
       return smartquotes.element(document.body);
