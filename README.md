@@ -35,4 +35,6 @@ Everything is converted except for `<code>`, `<script>`, `<style>`, and `<pre>` 
 
 ## Contributing
 
-If you find bugs or additions to the code, the best way to contribute is to fork this repo, make the changes (without updating version numbers), and make a pull request back to this repo to be merged in.  Still working on getting tests in place for Smartquotes.js.
+If you find bugs or additions to the code, the best way to contribute is to fork this repo, make the changes (without updating version numbers), and make a pull request back to this repo to be merged in.
+
+To generate smartquotes.min.js and smartquotes.min.js.map, run `npm run build`.

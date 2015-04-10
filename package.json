@@ -14,15 +14,17 @@
     "type": "git",
     "url": "git://github.com/kellym/smartquotesjs.git"
   },
-  "main": "./src/smartquotes.js",
+  "main": "./src/smartquotes",
   "bugs": {
     "url": "https://github.com/kellym/smartquotesjs/issues"
   },
   "scripts": {
-    "test": "node ./test"
+    "test": "node ./test",
+    "build": "cd src && uglifyjs smartquotes.js -o smartquotes.min.js --source-map smartquotes.min.js.map -c -m --comments '/Copyright/'"
   },
   "devDependencies": {
     "jsdom": "^3.1.2",
-    "tape": "^4.0.0"
+    "tape": "^4.0.0",
+    "uglify-js": "^2.4.19"
   }
 }
