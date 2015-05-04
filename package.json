@@ -1,14 +1,16 @@
 {
   "name": "smartquotesjs",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "author": "Kelly Martin",
+  "contributors": ["Callum Macrae"],
   "description": "Smart quotes are smart typography.",
   "homepage": "http://github.com/kellym/smartquotesjs",
   "license": "MIT",
   "keywords": [
     "smart",
     "quotes",
-    "browser"
+    "browser",
+    "node.js"
   ],
   "repository": {
     "type": "git",
