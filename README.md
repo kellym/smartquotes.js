@@ -5,9 +5,9 @@ Smart quotes are smart typography, and now it’s just a ’script away.
 
 Visit the homepage at <a href="http://smartquotesjs.com">smartquotesjs.com</a>.
 
-```java
-// Just include the script somewhere on the page and you're good to go.
-<script src="smartquotes.min.js" type="text/javascript"></script>
+```markup
+<script src="smartquotes.min.js"></script>
+<script> smartquotes() </script>
 ```
 #### What are smart quotes?
 
@@ -27,12 +27,14 @@ Technically, words that are shortened at the beginning require a backwards apost
 
 #### What do I need to change in my code?
 
-Nothing. Just include the script, and Smartquotes.js will detect all your dumb quotes and convert them to the respective smart versions. If you use jQuery, put this script after jQuery and Smartquotes.js will use jQuery’s onload event. Otherwise, Smartquotes.js doesn’t have any dependencies and can be used by itself.
+Just include the script, call `smartquotes()` once the page has loaded, and Smartquotes.js will detect all your dumb quotes and convert them to the respective smart versions. Smartquotes.js doesn’t have any dependencies and can be used by itself.
 
 #### What tags are converted automatically?
 
-Everything is converted except for `<code>`, `<script>`, and `<style>` tags.
+Everything is converted except for `<code>`, `<script>`, `<style>`, and `<pre>` tags.
 
 ## Contributing
 
-If you find bugs or additions to the code, the best way to contribute is to fork this repo, make the changes (without updating version numbers), and make a pull request back to this repo to be merged in.  Still working on getting tests in place for Smartquotes.js.
+If you find bugs or additions to the code, the best way to contribute is to fork this repo, make the changes (without updating version numbers), and make a pull request back to this repo to be merged in.
+
+To generate smartquotes.min.js and smartquotes.min.js.map, run `npm run build`.
