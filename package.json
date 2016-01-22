@@ -2,7 +2,7 @@
   "name": "smartquotes",
   "version": "1.0.0",
   "author": "Kelly Martin",
-  "contributors": ["Callum Macrae"],
+  "contributors": ["Kelly Martin","Callum Macrae"],
   "description": "Smart quotes are smart typography.",
   "homepage": "http://github.com/kellym/smartquotesjs",
   "license": "MIT",
