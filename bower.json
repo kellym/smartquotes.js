@@ -24,6 +24,6 @@
     "bower_components",
     "demo",
     "test",
-    "test.js",
+    "test.js"
   ]
 }
