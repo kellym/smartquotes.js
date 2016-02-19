@@ -4,6 +4,7 @@ var fs = require('fs');
 var jsdom = require('jsdom');
 var test = require('tape');
 var smartquotes = require('./');
+var quotesTests = require('straight-to-curly-quotes');
 
 test('smartquotes.string()', function (t) {
   var s = smartquotes.string;
@@ -16,6 +17,9 @@ test('smartquotes.string()', function (t) {
   t.equal(s('\'95'), '’95');
   t.equal(s('\'\'\''), '‴');
   t.equal(s('\'\''), '″');
+  quotesTests.forEach(function(test) {
+    t.equal(s(test.straight), test.curly);
+  });
 
   // needs test for backwards apostrophe, but not sure when it happens
 
