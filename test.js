@@ -29,11 +29,7 @@ test('smartquotes.element()', function (t) {
   jsdom.env({
     file: 'demo/test.html',
     scripts: '../src/smartquotes.js',
-    loaded: function (err, window) {
-      if (err) {
-        throw err;
-      }
-
+    onload: function (window) {
       window.smartquotes.element(window.document.body);
 
       var one = window.document.getElementById('one');
@@ -53,11 +49,7 @@ test('smartquotes()', function (t) {
   jsdom.env({
     file: 'demo/test.html',
     scripts: '../src/smartquotes.js',
-    loaded: function (err, window) {
-      if (err) {
-        throw err;
-      }
-
+    onload: function (window) {
       var one = window.document.getElementById('one');
       var two = window.document.getElementById('two');
 
