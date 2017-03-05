@@ -1,11 +1,3 @@
-/*!
- * smartquotes.js v0.1.4
- * http://github.com/kellym/smartquotesjs
- * MIT licensed
- *
- * Copyright (C) 2013 Kelly Martin, http://kelly-martin.com
- */
-
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(factory);
@@ -14,9 +6,11 @@
   } else {
     root.smartquotes = factory();
   }
-}(this, function () {
+}(this, function() {
+
   // The smartquotes function should just delegate to the other functions
   function smartquotes(context) {
+    // if called by itself, run on the entire body
     if (typeof context === 'undefined') {
       return smartquotes.element(document.body);
     }
@@ -30,7 +24,7 @@
     }
   }
 
-  smartquotes.string = function smartquotesString(str) {
+  smartquotes.string = function(str) {
     return str
       .replace(/'''/g, '\u2034')                                                   // triple prime
       .replace(/(\W|^)"(\S)/g, '$1\u201c$2')                                       // beginning "
@@ -45,7 +39,7 @@
       .replace(/'/g, '\u2032');
   };
 
-  smartquotes.element = function smartquotesElement(root) {
+  smartquotes.element = function(root) {
     var TEXT_NODE = Element.TEXT_NODE || 3;
 
     handleElement(root);
@@ -61,13 +55,15 @@
       }
 
       var childNodes = el.childNodes;
+      var text = '';
 
       for (var i = 0; i < childNodes.length; i++) {
         var node = childNodes[i];
 
         if (node.nodeType === TEXT_NODE) {
-          node.nodeValue = smartquotes.string(node.nodeValue);
+          node.nodeValue = smartquotes.string(text + node.nodeValue).substr(text.length);
         }
+        text += node.nodeValue;
       }
     }
   };

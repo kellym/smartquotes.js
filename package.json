@@ -2,10 +2,14 @@
   "name": "smartquotes",
   "version": "1.0.0",
   "author": "Kelly Martin",
-  "contributors": ["Kelly Martin","Callum Macrae"],
+  "contributors": [
+    "Kelly Martin",
+    "Callum Macrae"
+  ],
   "description": "Smart quotes are smart typography.",
   "homepage": "http://github.com/kellym/smartquotesjs",
   "license": "MIT",
+  "main": "smartquotes.js",
   "keywords": [
     "smart",
     "quotes",
@@ -16,20 +20,18 @@
     "type": "git",
     "url": "git://github.com/kellym/smartquotesjs.git"
   },
-  "main": "./src/smartquotes",
   "bugs": {
     "url": "https://github.com/kellym/smartquotesjs/issues"
   },
   "scripts": {
-    "test": "node ./test",
-    "build": "cd src && uglifyjs smartquotes.js -o smartquotes.min.js --source-map smartquotes.min.js.map -c -m --comments '/Copyright/'"
+    "test": "tap test/*.js"
   },
   "devDependencies": {
     "jsdom": "^7.0.0",
-    "tape": "^4.0.0",
+    "tap": "^10.3.0",
     "uglify-js": "^2.4.19"
   },
   "engines": {
-    "node" : ">=4.0.0"
+    "node": ">=4.0.0"
   }
 }
