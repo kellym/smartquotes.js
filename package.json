@@ -28,8 +28,7 @@
   },
   "devDependencies": {
     "jsdom": "^7.0.0",
-    "tap": "^10.3.0",
-    "uglify-js": "^2.4.19"
+    "tap": "^10.3.0"
   },
   "engines": {
     "node": ">=4.0.0"
