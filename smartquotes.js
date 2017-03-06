@@ -11,13 +11,21 @@
   // The smartquotes function should just delegate to the other functions
   function smartquotes(context) {
     if (typeof context === 'undefined') {
+      var run = function() { smartquotes.element(document.body); };
       // if called without arguments, run on the entire body after the document has loaded
-      var readyStateCheckInterval = setInterval(function() {
-        if (document.readyState !== 'loading') {
-          clearInterval(readyStateCheckInterval);
-          smartquotes.element(document.body);
-        }
-      }, 10);
+      if (document.readyState !== 'loading') {
+        // we're already ready
+        run();
+      } else if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", run, false);
+      } else {
+        var readyStateCheckInterval = setInterval(function() {
+          if (document.readyState !== 'loading') {
+            clearInterval(readyStateCheckInterval);
+            run();
+          }
+        }, 10);
+      }
     } else if (typeof context === 'string') {
       return smartquotes.string(context);
     } else if (context instanceof HTMLElement) {
