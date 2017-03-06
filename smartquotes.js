@@ -1,11 +1,3 @@
-/*!
- * smartquotes.js v0.1.4
- * http://github.com/kellym/smartquotesjs
- * MIT licensed
- *
- * Copyright (C) 2013 Kelly Martin, http://kelly-martin.com
- */
-
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(factory);
@@ -14,23 +6,34 @@
   } else {
     root.smartquotes = factory();
   }
-}(this, function () {
+}(this, function() {
+
   // The smartquotes function should just delegate to the other functions
   function smartquotes(context) {
     if (typeof context === 'undefined') {
-      return smartquotes.element(document.body);
-    }
-
-    if (typeof context === 'string') {
+      var run = function() { smartquotes.element(document.body); };
+      // if called without arguments, run on the entire body after the document has loaded
+      if (document.readyState !== 'loading') {
+        // we're already ready
+        run();
+      } else if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", run, false);
+      } else {
+        var readyStateCheckInterval = setInterval(function() {
+          if (document.readyState !== 'loading') {
+            clearInterval(readyStateCheckInterval);
+            run();
+          }
+        }, 10);
+      }
+    } else if (typeof context === 'string') {
       return smartquotes.string(context);
-    }
-
-    if (context instanceof HTMLElement) {
+    } else if (context instanceof HTMLElement) {
       return smartquotes.element(context);
     }
   }
 
-  smartquotes.string = function smartquotesString(str) {
+  smartquotes.string = function(str) {
     return str
       .replace(/'''/g, '\u2034')                                                   // triple prime
       .replace(/(\W|^)"(\S)/g, '$1\u201c$2')                                       // beginning "
@@ -45,31 +48,44 @@
       .replace(/'/g, '\u2032');
   };
 
-  smartquotes.element = function smartquotesElement(root) {
+  smartquotes.element = function(root) {
     var TEXT_NODE = Element.TEXT_NODE || 3;
 
     handleElement(root);
-
-    var children = root.getElementsByTagName('*');
-    for (var i = 0; i < children.length; i++) {
-      handleElement(children[i]);
-    }
 
     function handleElement(el) {
       if (['CODE', 'PRE', 'SCRIPT', 'STYLE'].indexOf(el.nodeName) !== -1) {
         return;
       }
 
+      var i, node;
       var childNodes = el.childNodes;
+      var textNodes = [];
+      var text = '';
 
-      for (var i = 0; i < childNodes.length; i++) {
-        var node = childNodes[i];
+      // compile all text first so we handle working around child nodes
+      for (i = 0; i < childNodes.length; i++) {
+        node = childNodes[i];
 
         if (node.nodeType === TEXT_NODE) {
-          node.nodeValue = smartquotes.string(node.nodeValue);
+          textNodes.push([node, text.length]);
+          text += node.nodeValue;
+        } else if (node.childNodes.length) {
+          text += handleElement(node);
+        }
+
+      }
+      text = smartquotes.string(text);
+      for (i in textNodes) {
+        var nodeInfo = textNodes[i];
+        if (nodeInfo[0].nodeValue) {
+          nodeInfo[0].nodeValue = text.substr(nodeInfo[1], nodeInfo[0].nodeValue.length);
         }
       }
+      return text;
     }
+
+    return root;
   };
 
   return smartquotes;

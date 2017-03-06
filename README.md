@@ -1,15 +1,54 @@
 smartquotes.js
 ==============
 
-Smart quotes are smart typography, and now it’s just a ’script away. 
+Smart quotes are smart typography, and now it’s just a ’script away.
 
 Visit the homepage at <a href="http://smartquotesjs.com">smartquotesjs.com</a>.
 
-```markup
-<script src="smartquotes.min.js"></script>
-<script> smartquotes() </script>
+### Installation
+
+`smartquotes` is available in both npm and bower.
+
 ```
-#### What are smart quotes?
+npm install smartquotes
+```
+```
+bower install smartquotes
+```
+
+Or download and use straight in your HTML:
+
+```markup
+<script src="smartquotes.js"></script>
+<script>smartquotes()</script>
+```
+
+### Usage
+
+For Node, require the script and pass it a string, or use the `string` method. Both
+are equivalent.
+
+```javascript
+const smartquotes = require('smartquotes');
+
+let myString = smartquotes('This is my "smart-quoted" string.');
+let myString2 = smartquotes.string('This is the "same" thing.');
+```
+
+Browser-based usage is similar, with the addition of another method to handle
+DOM elements:
+
+```
+var smartquotes = require('smartquotes'); // both AMD and CommonJS module formats work
+
+// Run smartquotes over the entire document after it's loaded
+smartquotes();
+
+// Run smartquotes over a specific element
+smartquotes(document.getElementById('myElement'));
+```
+
+### What are smart quotes?
 
 “Smart quotes,” or “curly quotes,” are the proper typographical way to represent quotation marks. Unfortunately, in order to save space on the keyboard, the dumb quote was created. Smartquotes.js is here to convert all your dumb quotes back to smart ones.
 
@@ -37,4 +76,4 @@ Everything is converted except for `<code>`, `<script>`, `<style>`, and `<pre>` 
 
 If you find bugs or additions to the code, the best way to contribute is to fork this repo, make the changes (without updating version numbers), and make a pull request back to this repo to be merged in.
 
-To generate smartquotes.min.js and smartquotes.min.js.map, run `npm run build`.
+The repository has Travis-CI running, but be sure to add any necessary tests and run `npm test` before opening a PR.

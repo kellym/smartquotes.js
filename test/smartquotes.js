@@ -1,9 +1,6 @@
-'use strict';
-
-var fs = require('fs');
 var jsdom = require('jsdom');
-var test = require('tape');
-var smartquotes = require('./');
+var test = require('tap').test;
+var smartquotes = require('../');
 
 test('smartquotes.string()', function (t) {
   var s = smartquotes.string;
@@ -24,11 +21,11 @@ test('smartquotes.string()', function (t) {
 });
 
 test('smartquotes.element()', function (t) {
-  t.plan(2);
+  t.plan(3);
 
   jsdom.env({
-    file: 'demo/test.html',
-    scripts: '../src/smartquotes.js',
+    file: './test/fixtures/basic.html',
+    scripts: '../../smartquotes.js', // path relative to file
     onload: function (window) {
       window.smartquotes.element(window.document.body);
 
@@ -37,6 +34,9 @@ test('smartquotes.element()', function (t) {
 
       var two = window.document.getElementById('two');
       t.equal(two.innerHTML, 'Marshiness of ’Ammercloth’s');
+
+      var three = window.document.getElementById('three');
+      t.equal(three.innerHTML, '<p>“This ‘text with an inner <em>emphasis</em>’ should be smart, too.</p><p>“Super smart.”</p>');
     }
   });
 });
@@ -47,8 +47,8 @@ test('smartquotes()', function (t) {
   t.equal(smartquotes('"test"'), '“test”');
 
   jsdom.env({
-    file: 'demo/test.html',
-    scripts: '../src/smartquotes.js',
+    file: './test/fixtures/basic.html',
+    scripts: '../../smartquotes.js', // path relative to file
     onload: function (window) {
       var one = window.document.getElementById('one');
       var two = window.document.getElementById('two');
