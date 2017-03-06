@@ -21,6 +21,7 @@ Or download and use straight in your HTML:
 ```markup
 <script src="smartquotes.js"></script>
 <script>smartquotes()</script>
+```
 
 ### Usage
 
