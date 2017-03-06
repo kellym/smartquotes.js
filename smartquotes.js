@@ -10,16 +10,17 @@
 
   // The smartquotes function should just delegate to the other functions
   function smartquotes(context) {
-    // if called by itself, run on the entire body
     if (typeof context === 'undefined') {
-      return smartquotes.element(document.body);
-    }
-
-    if (typeof context === 'string') {
+      // if called without arguments, run on the entire body after the document has loaded
+      var readyStateCheckInterval = setInterval(function() {
+        if (document.readyState !== 'loading') {
+          clearInterval(readyStateCheckInterval);
+          smartquotes.element(document.body);
+        }
+      }, 10);
+    } else if (typeof context === 'string') {
       return smartquotes.string(context);
-    }
-
-    if (context instanceof HTMLElement) {
+    } else if (context instanceof HTMLElement) {
       return smartquotes.element(context);
     }
   }
@@ -75,6 +76,8 @@
       }
       return text;
     }
+
+    return root;
   };
 
   return smartquotes;
