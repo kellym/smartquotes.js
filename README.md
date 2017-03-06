@@ -38,7 +38,7 @@ let myString2 = smartquotes.string('This is the "same" thing.');
 Browser-based usage is similar, with the addition of another method to handle
 DOM elements:
 
-```
+```javascript
 var smartquotes = require('smartquotes'); // both AMD and CommonJS module formats work
 
 // Run smartquotes over the entire document after it's loaded
