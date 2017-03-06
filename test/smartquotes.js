@@ -36,8 +36,7 @@ test('smartquotes.element()', function (t) {
       t.equal(two.innerHTML, 'Marshiness of ’Ammercloth’s');
 
       var three = window.document.getElementById('three');
-      t.equal(three.innerHTML, 'This “text with an inner <em>emphasis</em>” should be smart, too.');
-
+      t.equal(three.innerHTML, '<p>“This ‘text with an inner <em>emphasis</em>’ should be smart, too.</p><p>“Super smart.”</p>');
     }
   });
 });

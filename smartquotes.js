@@ -44,27 +44,36 @@
 
     handleElement(root);
 
-    var children = root.getElementsByTagName('*');
-    for (var i = 0; i < children.length; i++) {
-      handleElement(children[i]);
-    }
-
     function handleElement(el) {
       if (['CODE', 'PRE', 'SCRIPT', 'STYLE'].indexOf(el.nodeName) !== -1) {
         return;
       }
 
+      var i, node;
       var childNodes = el.childNodes;
+      var textNodes = [];
       var text = '';
 
-      for (var i = 0; i < childNodes.length; i++) {
-        var node = childNodes[i];
+      // compile all text first so we handle working around child nodes
+      for (i = 0; i < childNodes.length; i++) {
+        node = childNodes[i];
 
         if (node.nodeType === TEXT_NODE) {
-          node.nodeValue = smartquotes.string(text + node.nodeValue).substr(text.length);
+          textNodes.push([node, text.length]);
+          text += node.nodeValue;
+        } else if (node.childNodes.length) {
+          text += handleElement(node);
         }
-        text += node.nodeValue;
+
       }
+      text = smartquotes.string(text);
+      for (i in textNodes) {
+        var nodeInfo = textNodes[i];
+        if (nodeInfo[0].nodeValue) {
+          nodeInfo[0].nodeValue = text.substr(nodeInfo[1], nodeInfo[0].nodeValue.length);
+        }
+      }
+      return text;
     }
   };
 
