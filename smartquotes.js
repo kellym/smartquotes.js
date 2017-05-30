@@ -68,9 +68,9 @@
       for (i = 0; i < childNodes.length; i++) {
         node = childNodes[i];
 
-        if (node.nodeType === TEXT_NODE) {
+        if (node.nodeType === TEXT_NODE || node.nodeName === '#text') {
           textNodes.push([node, text.length]);
-          text += node.nodeValue;
+          text += node.nodeValue || node.value;
         } else if (node.childNodes && node.childNodes.length) {
           text += handleElement(node);
         }
@@ -81,6 +81,8 @@
         var nodeInfo = textNodes[i];
         if (nodeInfo[0].nodeValue) {
           nodeInfo[0].nodeValue = text.substr(nodeInfo[1], nodeInfo[0].nodeValue.length);
+        } else if (nodeInfo[0].value) {
+          nodeInfo[0].value = text.substr(nodeInfo[1], nodeInfo[0].value.length);
         }
       }
       return text;
