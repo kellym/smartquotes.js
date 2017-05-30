@@ -1,5 +1,6 @@
 var jsdom = require('jsdom');
 var test = require('tap').test;
+var parse5 = require('parse5');
 var smartquotes = require('../');
 
 // a list of test strings and expected converted values
@@ -74,4 +75,11 @@ test('smartquotes()', function (t) {
       t.equal(two.innerHTML, 'Marshiness of \u2019Ammercloth\u2019s');
     }
   });
+});
+
+test('parse5 support with smartquotes.element', function(t) {
+  var document = parse5.parse('"test text"');
+  smartquotes.element(document);
+  t.match(parse5.serialize(document), /\u201ctest text\u201d/);
+  t.end();
 });
