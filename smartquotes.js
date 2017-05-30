@@ -10,7 +10,7 @@
 
   // The smartquotes function should just delegate to the other functions
   function smartquotes(context) {
-    if (typeof context === 'undefined') {
+    if (typeof document !== 'undefined' && typeof context === 'undefined') {
       var run = function() { smartquotes.element(document.body); };
       // if called without arguments, run on the entire body after the document has loaded
       if (document.readyState !== 'loading') {
@@ -28,7 +28,7 @@
       }
     } else if (typeof context === 'string') {
       return smartquotes.string(context);
-    } else if (context instanceof HTMLElement) {
+    } else {
       return smartquotes.element(context);
     }
   }
@@ -50,12 +50,12 @@
   };
 
   smartquotes.element = function(root) {
-    var TEXT_NODE = Element.TEXT_NODE || 3;
+    var TEXT_NODE = typeof Element !== 'undefined' && Element.TEXT_NODE || 3;
 
     handleElement(root);
 
     function handleElement(el) {
-      if (['CODE', 'PRE', 'SCRIPT', 'STYLE'].indexOf(el.nodeName) !== -1) {
+      if (['CODE', 'PRE', 'SCRIPT', 'STYLE'].indexOf(el.nodeName.toUpperCase()) !== -1) {
         return;
       }
 
