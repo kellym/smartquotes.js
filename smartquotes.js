@@ -71,7 +71,7 @@
         if (node.nodeType === TEXT_NODE) {
           textNodes.push([node, text.length]);
           text += node.nodeValue;
-        } else if (node.childNodes.length) {
+        } else if (node.childNodes && node.childNodes.length) {
           text += handleElement(node);
         }
 
