@@ -35,7 +35,7 @@ test('smartquotes.string()', (t) => {
 });
 
 test('smartquotes.element()', (t) => {
-  t.plan(3);
+  t.plan(4);
 
   jsdom.env({
     file: './test/fixtures/basic.html',
@@ -51,6 +51,9 @@ test('smartquotes.element()', (t) => {
 
       var three = window.document.getElementById('three');
       t.equal(three.innerHTML, '<p>\u201cThis \u2018text with an inner <em>emphasis</em>\u2019 should be smart, too.</p><p>\u201cSuper smart.\u201d</p>');
+
+      var four = window.document.getElementById('four');
+      t.match(four.innerHTML, 'Veilingsite');
     }
   });
 });
