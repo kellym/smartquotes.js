@@ -43,17 +43,19 @@ test('smartquotes.element()', (t) => {
     onload: function (window) {
       window.smartquotes.element(window.document.body);
 
+      // should convert basic types of quotes to smart quotes
       var one = window.document.getElementById('one');
-      t.equal(one.innerHTML, 'Ma\u2019am, this \u201ctest\u201d is from \u201995');
-
       var two = window.document.getElementById('two');
+      t.equal(one.innerHTML, 'Ma\u2019am, this \u201ctest\u201d is from \u201995');
       t.equal(two.innerHTML, 'Marshiness of \u2019Ammercloth\u2019s');
 
+      // should handle tags inside tags
       var three = window.document.getElementById('three');
       t.equal(three.innerHTML, '<p>\u201cThis \u2018text with an inner <em>emphasis</em>\u2019 should be smart, too.</p><p>\u201cSuper smart.\u201d</p>');
 
+      // should retain proper substrings inside tag
       var four = window.document.getElementById('four');
-      t.match(four.innerHTML, 'Veilingsite');
+      t.match(four.innerHTML, 'Maar Mees');
     }
   });
 });

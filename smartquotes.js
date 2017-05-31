@@ -33,13 +33,13 @@
     }
   }
 
-  smartquotes.string = function(str) {
+  smartquotes.string = function(str, retainLength) {
     return str
-      .replace(/'''/g, '\u2034')                                                   // triple prime
-      .replace(/(\W|^)"(\w)/g, '$1\u201c$2')                                      // beginning "
+      .replace(/'''/g, '\u2034' + (retainLength ? '\u2063\u2063' : ''))            // triple prime
+      .replace(/(\W|^)"(\w)/g, '$1\u201c$2')                                       // beginning "
       .replace(/(\u201c[^"]*)"([^"]*$|[^\u201c"]*\u201c)/g, '$1\u201d$2')          // ending "
       .replace(/([^0-9])"/g,'$1\u201d')                                            // remaining " at end of word
-      .replace(/''/g, '\u2033')                                                    // double prime as two single quotes
+      .replace(/''/g, '\u2033' + (retainLength ? '\u2063' : ''))                   // double prime as two single quotes
       .replace(/(\W|^)'(\S)/g, '$1\u2018$2')                                       // beginning '
       .replace(/([a-z])'([a-z])/ig, '$1\u2019$2')                                  // conjunction's possession
       .replace(/(\u2018)([0-9]{2}[^\u2019]*)(\u2018([^0-9]|$)|$|\u2019[a-z])/ig, '\u2019$2$3')     // abbrev. years like '93
@@ -59,7 +59,7 @@
         return;
       }
 
-      var i, node;
+      var i, node, nodeInfo;
       var childNodes = el.childNodes;
       var textNodes = [];
       var text = '';
@@ -76,16 +76,20 @@
         }
 
       }
-      text = smartquotes.string(text);
+      text = smartquotes.string(text, true);
       for (i in textNodes) {
-        var nodeInfo = textNodes[i];
+        nodeInfo = textNodes[i];
         if (nodeInfo[0].nodeValue) {
-          nodeInfo[0].nodeValue = text.substr(nodeInfo[1], nodeInfo[0].nodeValue.length);
+          nodeInfo[0].nodeValue = substring(text, nodeInfo[0].nodeValue, nodeInfo[1]);
         } else if (nodeInfo[0].value) {
-          nodeInfo[0].value = text.substr(nodeInfo[1], nodeInfo[0].value.length);
+          nodeInfo[0].value = substring(text, nodeInfo[0].value, nodeInfo[1]);
         }
       }
       return text;
+    }
+
+    function substring(text, value, position) {
+      return text.substr(position, value.length).replace('\u2063', '');
     }
 
     return root;
