@@ -46,7 +46,8 @@
       .replace(/((\u2018[^']*)|[a-z])'([^0-9]|$)/ig, '$1\u2019$3')                 // ending '
       .replace(/(\B|^)\u2018(?=([^\u2018\u2019]*\u2019\b)*([^\u2018\u2019]*\B\W[\u2018\u2019]\b|[^\u2018\u2019]*$))/ig, '$1\u2019') // backwards apostrophe
       .replace(/"/g, '\u2033')                                                     // double prime
-      .replace(/'/g, '\u2032');                                                    // prime
+      .replace(/'/g, '\u2032')                                                     // prime
+      .replace(/\-\-/g, '\u2014');                                                 // em dash
   };
 
   smartquotes.element = function(root) {
