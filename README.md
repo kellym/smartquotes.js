@@ -1,11 +1,11 @@
-[![Build Status](https://travis-ci.org/kellym/smartquotesjs.svg?branch=master)](https://travis-ci.org/kellym/smartquotesjs)
-
 smartquotes.js
 ==============
 
 Smart quotes are smart typography, and now it’s just a ’script away.
 
 Visit the homepage at <a href="http://smartquotesjs.com">smartquotesjs.com</a>. If you're planning on using this with node.js and express, try the express middleware <a href="http://github.com/kellym/express-smartquotes">express-smartquotes</a>.
+
+[![Build Status](https://travis-ci.org/kellym/smartquotesjs.svg?branch=master)](https://travis-ci.org/kellym/smartquotesjs)
 
 ### Installation
 
