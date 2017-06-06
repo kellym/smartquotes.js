@@ -43,6 +43,22 @@ test('smartquotes.element()', t => {
   });
 
   jsdom.env({
+    html: '',
+    onload: (window) => {
+      test('respects custom processString behavior', t => {
+        var node = window.document.createElement('div');
+        node.innerHTML = '<div><div class="some--class">hello - world</div><div>goodbye -- cruel</div><div>bleah --- thing</div></div>';
+        smartquotes.element(node, {
+          processString: (str) => str.replace(/\-\-/g, '\u2014')
+        });
+        t.match(node.innerHTML, '<div><div class="some--class">hello - world</div><div>goodbye \u2014 cruel</div><div>bleah \u2014- thing</div></div>');
+
+        t.end();
+      });
+    }
+  });
+
+  jsdom.env({
     file: './test/fixtures/basic.html',
     scripts: '../../smartquotes.js', // path relative to file
     onload: function (window) {

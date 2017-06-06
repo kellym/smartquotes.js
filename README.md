@@ -50,6 +50,20 @@ smartquotes();
 smartquotes(document.getElementById('myElement'));
 ```
 
+To add custom string processing logic, pass in a `processString` function that takes
+a string as input, and returns a string as output. `processString` will be called
+on each text node in the dom and will be passed the smartened text.
+
+```javascript
+smartquotes(document.getElementById('myElement', {
+  processString: (string) => string.replace(/\-\-/g, '\u2014')
+}));
+
+smartquotes.string('hello -- world', false, {
+  processString: (string) => string.replace(/\-\-/g, '\u2014')
+});
+```
+
 ### What are smart quotes?
 
 “Smart quotes,” or “curly quotes,” are the proper typographical way to represent quotation marks. Unfortunately, in order to save space on the keyboard, the dumb quote was created. Smartquotes.js is here to convert all your dumb quotes back to smart ones.
