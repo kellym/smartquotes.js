@@ -9,9 +9,9 @@
 }(this, function() {
 
   // The smartquotes function should just delegate to the other functions
-  function smartquotes(context) {
+  function smartquotes(context, options) {
     if (typeof document !== 'undefined' && typeof context === 'undefined') {
-      var run = function() { smartquotes.element(document.body); };
+      var run = function() { smartquotes.element(document.body, options); };
       // if called without arguments, run on the entire body after the document has loaded
       if (document.readyState !== 'loading') {
         // we're already ready
@@ -27,14 +27,14 @@
         }, 10);
       }
     } else if (typeof context === 'string') {
-      return smartquotes.string(context);
+      return smartquotes.string(context, undefined, options);
     } else {
-      return smartquotes.element(context);
+      return smartquotes.element(context, options);
     }
   }
 
-  smartquotes.string = function(str, retainLength) {
-    return str
+  smartquotes.string = function(str, retainLength, options) {
+    var smartened = str
       .replace(/'''/g, '\u2034' + (retainLength ? '\u2063\u2063' : ''))            // triple prime
       .replace(/(\W|^)"(\w)/g, '$1\u201c$2')                                       // beginning "
       .replace(/(\u201c[^"]*)"([^"]*$|[^\u201c"]*\u201c)/g, '$1\u201d$2')          // ending "
@@ -47,9 +47,17 @@
       .replace(/(\B|^)\u2018(?=([^\u2018\u2019]*\u2019\b)*([^\u2018\u2019]*\B\W[\u2018\u2019]\b|[^\u2018\u2019]*$))/ig, '$1\u2019') // backwards apostrophe
       .replace(/"/g, '\u2033')                                                     // double prime
       .replace(/'/g, '\u2032');                                                    // prime
+
+    // add custom string processing logic here -- for example converting double dashes to
+    // em dashes.
+    if (options && options.processString && typeof options.processString === 'function') {
+      return options.processString(smartened);
+    }
+
+    return smartened;
   };
 
-  smartquotes.element = function(root) {
+  smartquotes.element = function(root, options) {
     var TEXT_NODE = typeof Element !== 'undefined' && Element.TEXT_NODE || 3;
 
     handleElement(root);
@@ -76,7 +84,7 @@
         }
 
       }
-      text = smartquotes.string(text, true);
+      text = smartquotes.string(text, true, options);
       for (i in textNodes) {
         nodeInfo = textNodes[i];
         if (nodeInfo[0].nodeValue) {
