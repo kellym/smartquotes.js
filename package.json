@@ -24,7 +24,7 @@
     "url": "https://github.com/kellym/smartquotesjs/issues"
   },
   "scripts": {
-    "preversion": "npm test && sed -i \"\" '\/^dist\\\/\/d' .gitignore && git add dist/ && git commit -m \"Build release\" && git checkout .gitignore",
+    "preversion": "npm test && git commit . -m \"Build release\" || true",
     "build": "webpack",
     "test": "npm run build && tap test/*.js"
   },
