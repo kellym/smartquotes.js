@@ -1,7 +1,7 @@
 {
   "name": "smartquotes",
   "description": "Smart quotes are smart typography.",
-  "main": "smartquotes.js",
+  "main": "dist/smartquotes.js",
   "authors": [
     "Kelly Martin",
     "Callum Macrae"

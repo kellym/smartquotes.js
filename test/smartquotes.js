@@ -1,12 +1,15 @@
-var jsdom = require('jsdom');
-var test = require('tap').test;
-var parse5 = require('parse5');
-var smartquotes = require('../');
+const jsdom       = require('jsdom'),
+      fs          = require('fs'),
+      parse5      = require('parse5'),
+      path        = require('path'),
+      { test }    = require('tap');
+
+const smartquotes = require('../dist/smartquotes');
 
 test('smartquotes.string()', t => {
 
   // a list of test strings and expected converted values
-  var expectations = {
+  const expectations = {
     '"test"': '\u201ctest\u201d',
     'the\u2014 "test"': 'the\u2014 \u201ctest\u201d',
     '\'test\'': '\u2018test\u2019',
@@ -36,47 +39,45 @@ test('smartquotes.string()', t => {
 test('smartquotes.element()', t => {
 
   test('supports parse5 parsing for server-side usage', t => {
-    var document = parse5.parse('"test text"');
+    const document = parse5.parse('"test text"');
     smartquotes.element(document);
     t.match(parse5.serialize(document), /\u201ctest text\u201d/);
     t.end();
   });
 
-  jsdom.env({
-    file: './test/fixtures/basic.html',
-    scripts: '../../smartquotes.js', // path relative to file
-    onload: function (window) {
-      window.smartquotes.element(window.document.body);
+  const document = jsdom.jsdom(fs.readFileSync(path.join(__dirname, 'fixtures/basic.html')));
+  const window = document.defaultView;
 
-      test('converting basic types of quotes to smart quotes', t => {
-        var one = window.document.getElementById('one');
-        var two = window.document.getElementById('two');
-        t.equal(one.innerHTML, 'Ma\u2019am, this \u201ctest\u201d is from \u201995');
-        t.equal(two.innerHTML, 'Marshiness of \u2019Ammercloth\u2019s');
-        t.end();
-      });
+  smartquotes.element(document.body);
 
-      test('handling tags inside tags', t => {
-        var three = window.document.getElementById('three');
-        t.equal(three.innerHTML, '<p>\u201cThis \u2018text with an inner <em>emphasis</em>\u2019 should be smart, too.</p><p>\u201cSuper smart.\u201d</p>');
-        t.end();
-      });
-
-      test('retaining proper substrings inside tag', t => {
-        var four = window.document.getElementById('four');
-        t.match(four.innerHTML, 'Maar Mees');
-        t.end();
-      });
-
-      test('does not alter script tags', t => {
-        var script = window.document.getElementsByTagName('SCRIPT')[0];
-        t.match(script.innerHTML, 'unchanged = "text"');
-        t.end();
-      });
-
-      t.end();
-    }
+  test('converting basic types of quotes to smart quotes', t => {
+    var one = document.getElementById('one');
+    var two = document.getElementById('two');
+    t.equal(one.innerHTML, 'Ma\u2019am, this \u201ctest\u201d is from \u201995');
+    t.equal(two.innerHTML, 'Marshiness of \u2019Ammercloth\u2019s');
+    t.end();
   });
+
+  test('handling tags inside tags', t => {
+    var three = document.getElementById('three');
+    t.equal(three.innerHTML, '<p>\u201cThis \u2018text with an inner <em>emphasis</em>\u2019 should be smart, too.</p><p>\u201cSuper smart.\u201d</p>');
+    t.end();
+  });
+
+  test('retaining proper substrings inside tag', t => {
+    var four = document.getElementById('four');
+    t.match(four.innerHTML, 'Maar Mees');
+    t.end();
+  });
+
+  test('does not alter script tags', t => {
+    var script = document.getElementsByTagName('SCRIPT')[0];
+    t.match(script.innerHTML, 'unchanged = "text"');
+    t.end();
+  });
+
+  t.end();
+
 });
 
 test('smartquotes()', t => {
@@ -87,30 +88,48 @@ test('smartquotes()', t => {
   });
 
   test('detects and converts html documents', t => {
-    jsdom.env({
-      file: './test/fixtures/basic.html',
-      scripts: '../../smartquotes.js', // path relative to file
-      onload: function (window) {
-        var one = window.document.getElementById('one');
-        var two = window.document.getElementById('two');
 
-        test('converts individual elements if passed as an argument', t => {
-          window.smartquotes(one);
-          t.equal(one.innerHTML, 'Ma\u2019am, this \u201ctest\u201d is from \u201995');
-          t.equal(two.innerHTML, 'Marshiness of \'Ammercloth\'s');
-          t.end();
-        });
+    const document = jsdom.jsdom(fs.readFileSync(path.join(__dirname, 'fixtures/basic.html')));
+    const window = document.defaultView;
 
-        test('converts entire document if no argument is passed', t => {
-          window.smartquotes();
-          t.equal(two.innerHTML, 'Marshiness of \u2019Ammercloth\u2019s');
-          t.end();
-        });
+    var one = document.getElementById('one');
+    var two = document.getElementById('two');
 
-        t.end();
-      }
+    test('converts individual elements if passed as an argument', t => {
+      smartquotes(one);
+      t.equal(one.innerHTML, 'Ma\u2019am, this \u201ctest\u201d is from \u201995');
+      t.equal(two.innerHTML, 'Marshiness of \'Ammercloth\'s');
+      t.end();
     });
+
+    test('converts entire document if no argument is passed', t => {
+      const _window = global.window;
+      const _document = global.document;
+      global.document = document;
+      global.window = window;
+      smartquotes();
+      t.equal(two.innerHTML, 'Marshiness of \u2019Ammercloth\u2019s');
+      global.window = _window;
+      global.document = _document;
+      t.end();
+    });
+
+    t.end();
+
   });
 
   t.end();
+});
+
+test('smartquotes exists in a browser', function(t) {
+
+  jsdom.env({
+    file: './test/fixtures/basic.html',
+    scripts: '../../dist/smartquotes.js', // path relative to file
+    onload: function (window) {
+      t.ok(window.smartquotes);
+      t.end();
+    }
+  });
+
 });
