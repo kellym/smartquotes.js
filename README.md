@@ -48,6 +48,12 @@ smartquotes();
 
 // Run smartquotes over a specific element
 smartquotes(document.getElementById('myElement'));
+
+// To listen to DOM changes:
+smartquotes.listen();
+
+// To run smartquotes over the entire document *and* listen for changes:
+smartquotes().listen();
 ```
 
 ### What are smart quotes?
