@@ -3,10 +3,22 @@
   <head>
     <title>smartquotes.js</title>
     <script src="src/smartquotes.js" type="text/javascript"></script>
-    <script>smartquotes();</script>
-    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,700,900' rel='stylesheet' type='text/css'>
+    <script>smartquotes().listen();</script>
+    <link href="https://fonts.googleapis.com/css?family=Dosis:800" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,700,900' rel='stylesheet' type='text/css'>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+    <script type="text/javascript">
+      function add() {
+        window.document.getElementById('dynamic-quotes').innerHTML = "<p>\"DYNAMIC!\"<\/p>";
+        setTimeout(remove, 10000);
+      }
+      function remove() {
+        window.document.getElementById('dynamic-quotes').innerHTML = '';
+        setTimeout(add, 5000);
+      }
+      setTimeout(add, 2500);
+    </script>
   </head>
   <body>
     <div class="container">
@@ -17,6 +29,7 @@
       <div class="text-center">
         <h1><span class="char1">s</span><span class="char2">m</span><span class="char3">a</span><span class="char4">r</span><span class="char5">t</span><span class="char6">q</span><span class="char7">u</span><span class="char8">o</span><span class="char9">t</span><span class="char10">e</span><span class="char11">s</span><span class="char12">.</span><span class="char13">j</span><span class="char14">s</span></h1>
         <h2>"Smart quotes are smart typography."</h2>
+        <div id="dynamic-quotes"></div>
         <p class="lead">"Better than a 65'6" whale." &ndash; Captain Ahab<br />
           "It's my '#1' choice!" &ndash; 12" Foam Finger from '93
         </p>
@@ -59,16 +72,18 @@
         details on installing from NPM or Bower.
         </p>
       <pre><code>
-      
       // Use it via requiring in a script (i.e. Node, webpack or the like):
       const smartquotes = require('smartquotes');
       smartquotes('My "string" needs smart quotes.');
-      
+
       // Or just include the script somewhere on the page, run it, and you're good to go.
       // Notice that quotes are not substituted in code blocks.
 
       &lt;script src="smartquotes.js">&lt;/script>
       &lt;script>smartquotes();&lt;/script>
+
+      // For dynamically added elements, you can listen for changes:
+      &lt;script>smartquotes().listen();&lt;/script>
       </code></pre>
       <p>
       <h4>Additional Reading</h4>
