@@ -125,7 +125,10 @@ test('smartquotes in a browser', function(t) {
 
   jsdom.env({
     file: './test/fixtures/basic.html',
-    scripts: ['../../node_modules/webcomponents.js/MutationObserver.js', '../../dist/smartquotes.js'],
+    scripts: [
+      '../../dist/smartquotes.js',
+      '../../node_modules/webcomponents.js/webcomponents-lite.js'
+    ],
     onload: function (window) {
 
       test('it exists as a global variable', t => {
@@ -134,23 +137,43 @@ test('smartquotes in a browser', function(t) {
       });
 
       test('it can react to DOM mutations', t => {
-        window.smartquotes.listen();
+        var listener = window.smartquotes.listen();
         var addedNode = window.document.createElement('div');
         var changedNode = window.document.createElement('div');
         addedNode.innerHTML = 'Adding "this" node.';
         changedNode.innerHTML = 'No quotes.';
         window.document.body.appendChild(addedNode);
         window.document.body.appendChild(changedNode);
-        changedNode.innerHTML = "Changing \"this\" node.";
+        t.equal(changedNode.innerHTML, 'No quotes.');
+        changedNode.childNodes[0].data = "Changing \"this\" node.";
         setTimeout(() => {
           t.equal(addedNode.innerHTML, "Adding \u201cthis\u201d node.");
-          t.equal(changedNode.innerHTML, "Changing \u201cthis\u201d node.");
+          t.equal(changedNode.textContent, "Changing \u201cthis\u201d node.");
+          listener.disconnect();
           t.end();
         });
       });
 
-      t.end();
+      test('it does not replace text in an ignored tag', t => {
+        var listener = window.smartquotes.listen();
+        var addedNode = window.document.createElement('code');
+        var changedNode = window.document.createElement('code');
+        addedNode.innerHTML = 'Adding "this" node.';
+        changedNode.innerHTML = 'No quotes.';
+        window.document.body.appendChild(addedNode);
+        t.equal(changedNode.innerHTML, 'No quotes.');
+        window.document.body.appendChild(changedNode);
+        changedNode.innerHTML = "Changing \"this\" node.";
+        setTimeout(() => {
+          t.notEqual(addedNode.innerHTML, "Adding \u201cthis\u201d node.");
+          t.notEqual(changedNode.innerHTML, "Changing \u201cthis\u201d node.");
+          listener.disconnect();
+          t.end();
+        });
+      });
+
     }
   });
+  t.end();
 
 });
