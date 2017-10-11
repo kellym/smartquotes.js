@@ -51,7 +51,12 @@ p { margin-bottom: 2em; }
 .text-center p { margin: 2em 0; }
 pre { margin-top: 2em; }
 code { background: #efefef; border: 1px solid #eee; padding: 0; text-align: left; display: block; margin: 1em auto; line-height: 1.8; }
-.container { max-width: 760px }
+.container { max-width: 760px; padding-top: 3em; position: relative; }
+#twitter-share {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
 .footer {
   margin-top: 4em;
   padding-top: 19px;
