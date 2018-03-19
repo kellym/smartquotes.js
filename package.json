@@ -7,7 +7,7 @@
     "Callum Macrae"
   ],
   "description": "Smart quotes are smart typography.",
-  "homepage": "http://github.com/kellym/smartquotesjs",
+  "homepage": "http://github.com/kellym/smartquotes.js",
   "license": "MIT",
   "main": "dist/smartquotes.js",
   "keywords": [
@@ -18,10 +18,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/kellym/smartquotesjs.git"
+    "url": "git://github.com/kellym/smartquotes.js.git"
   },
   "bugs": {
-    "url": "https://github.com/kellym/smartquotesjs/issues"
+    "url": "https://github.com/kellym/smartquotes.js/issues"
   },
   "scripts": {
     "preversion": "npm test && git commit . -m \"Build release\" || true",
