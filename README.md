@@ -18,6 +18,12 @@ npm install smartquotes
 bower install smartquotes
 ```
 
+You can also include it via CDN:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/smartquotes/dist/smartquotes.js"></script>
+```
+
 Or download and use straight in your HTML:
 
 ```markup
