@@ -25,7 +25,8 @@ test('smartquotes.string()', t => {
     '"Quote?": Description': '\u201cQuote?\u201d: Description',
     '\'Quo Te?\': Description': '\u2018Quo Te?\u2019: Description',
     '"De Poesjes van Kevin?": Something, something': '\u201cDe Poesjes van Kevin?\u201d: Something, something',
-    'And then she blurted, "I thought you said, \'I don\'t like \'80s music\'?"': "And then she blurted, \u201cI thought you said, \u2018I don\u2019t like \u201980s music\u2019?\u201d"
+    'And then she blurted, "I thought you said, \'I don\'t like \'80s music\'?"': "And then she blurted, \u201cI thought you said, \u2018I don\u2019t like \u201980s music\u2019?\u201d",
+    'Person 1\'s grammar is better than person 2\'s.': 'Person 1\u2019s grammar is better than person 2\u2019s.',
   };
 
   Object.keys(expectations).forEach( string => {
