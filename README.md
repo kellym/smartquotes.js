@@ -54,6 +54,13 @@ smartquotes.listen();
 
 // To run smartquotes over the entire document *and* listen for changes:
 smartquotes().listen();
+
+// Listen and ignore any elements (and their descendants) with the given class names
+smartquotes().listen(document.getElementById('myElement'), ["ignore-this-class"]);
+
+// ...or run and listen over the entire document with ignored classes
+const ignoreClasses = ["ignore-this-class", "also-ignore-this-class"]
+smartquotes(null, ignoreClasses).listen(null, ignoreClasses); // `null` defaults to the whole document
 ```
 
 ### What are smart quotes?

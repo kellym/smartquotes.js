@@ -124,6 +124,8 @@ test('smartquotes()', t => {
 
 test('smartquotes in a browser', function(t) {
 
+  const ignoredClasses = ["ignored-class-1", "ignored-class-2"];
+
   jsdom.env({
     file: './test/fixtures/basic.html',
     scripts: [
@@ -173,6 +175,68 @@ test('smartquotes in a browser', function(t) {
         });
       });
 
+      test('it does not replace text in an ignored class', t => {
+        const listener = window.smartquotes(null, ignoredClasses).listen(null, ignoredClasses);
+
+        const addedNode = window.document.createElement('DIV');
+        addedNode.className = ignoredClasses[0];
+        addedNode.innerHTML = 'Adding "this" node.';
+
+        window.document.body.appendChild(addedNode);
+
+        setTimeout(() => {
+          t.notEqual(addedNode.innerHTML, "Adding \u201cthis\u201d node.");
+          t.equal(addedNode.innerHTML, 'Adding "this" node.')
+          listener.disconnect();
+          t.end();
+        });
+      });
+
+      test('it does not replace change text in an ignored class', t => {
+        const listener = window.smartquotes(null, ignoredClasses).listen(null, ignoredClasses);
+
+        const changedNode = window.document.createElement('DIV');
+        changedNode.className = ignoredClasses[1];
+        changedNode.innerHTML = 'No quotes.';
+
+        window.document.body.appendChild(changedNode);
+        changedNode.innerHTML = "Changing \"this\" node.";
+
+        setTimeout(() => {
+          t.notEqual(changedNode.innerHTML, "Changing \u201cthis\u201d node.");
+          t.equal(changedNode.innerHTML, "Changing \"this\" node.")
+          listener.disconnect();
+          t.end();
+        });
+      });
+
+      test('it does not replace deeply nested text in an ignored class', t => {
+        const listener = window.smartquotes(null, ignoredClasses).listen(null, ignoredClasses);
+        const five = window.document.getElementById('five');
+
+        setTimeout(() => {
+          console.log(five.innerHTML);
+          t.match(five.innerHTML, "This 'text should be dumb!'");
+
+          listener.disconnect();
+          t.end();
+        });
+      });
+
+      test('it does not replace deeply nested text changes in an ignored class', t => {
+        const ignoredClasses = ["ignored-class"];
+        const listener = window.smartquotes(null, ignoredClasses).listen(null, ignoredClasses);
+        const five = window.document.getElementById('five');
+
+        const changedHTML = "<div><div><h1>this should not be 'curly'</h1></div></div>"
+        five.innerHTML = changedHTML
+
+        setTimeout(() => {
+          t.match(five.innerHTML, changedHTML);
+          listener.disconnect();
+          t.end();
+        });
+      });
     }
   });
   t.end();
